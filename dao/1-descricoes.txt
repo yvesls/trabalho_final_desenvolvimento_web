@@ -1,0 +1,13 @@
+Todas as classes da DAO tem (até o momento):
+- Método de inserir<Entidade>, excluir<Entidade>, atualizar<Entidade>, buscarPorId e buscarTodos
+- Construct vazio
+- Método privado para criar a entidade que irá retornar
+
+OBS: 
+- Em suma, coloquei os atributos que julguei "atualizáveis" em todas as DAO's. É preciso revisar de acordo
+com a regra de negócio posteriormente.
+- Os métodos inserir<Entidade>, excluir<Entidade> e atualizar<Entidade> possuem retorno booleano,
+o resto retorna uma entidade da própria classe com todos os campos (exceto a senha na classe ClienteDAO)
+
+IMPORTANTE: 
+- Acho necessário criar uma outra entidade chamada Administrador que irá fazer o controle de serviços prestados.

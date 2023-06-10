@@ -1,0 +1,8 @@
+Todas as classes tem:
+- getters e setters de todos os atributos
+- construtor vazio
+- um método que seta todos os atributos (com exceção da primary key)
+
+OBS: 
+- Escolhi adotar a prática CamelCase para as classes, metodos e atributos.
+- As classes seguem o padrão de primeira letra maiúscula.
