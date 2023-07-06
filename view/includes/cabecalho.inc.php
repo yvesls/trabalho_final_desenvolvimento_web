@@ -41,6 +41,36 @@
               </a>
             </li>
           </ul>
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Prestador</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./incluirTipoServico.php" aria-expanded="false">
+                <span>
+                  <!-- <i class="ti ti-user-plus"></i> -->
+                </span>
+                <span class="hide-menu">Cadastrar Tipo de Serviço</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="../controllers/controllerTipoServico.php?opcao=buscarTipoServicoParaIncluirServico" aria-expanded="false">
+                <span>
+                  <!-- <i class="ti ti-user-plus"></i> -->
+                </span>
+                <span class="hide-menu">Cadastrar Serviço</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./exibirServicos.php" aria-expanded="false">
+                <span>
+                  <!-- <i class="ti ti-user-plus"></i> -->
+                </span>
+                <span class="hide-menu">Serviços</span>
+              </a>
+            </li>
+          </ul>
         </nav>
         <!-- End Sidebar navigation -->
       </div>

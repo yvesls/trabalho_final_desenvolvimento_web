@@ -11,16 +11,16 @@ class VendaDAO
         $this->conexao = $con->getConexao();
     }
 
-    public function inserirVenda(Venda $venda)
+    public function inserirVenda($venda)
     {
         $sql = "INSERT INTO vendas (cod_cliente, cod_produto, valor_total, quantidade_itens)
                 VALUES (:codCliente, :codProduto, :valorTotal, :quantidadeItens)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':codCliente', $venda->getCodCliente());
-        $stmt->bindParam(':codProduto', $venda->getCodProduto());
-        $stmt->bindParam(':valorTotal', $venda->getValorTotal());
-        $stmt->bindParam(':quantidadeItens', $venda->getQuantidadeItens());
+        $stmt->bindValue(':codCliente', $venda->getCodCliente());
+        $stmt->bindValue(':codProduto', $venda->getCodProduto());
+        $stmt->bindValue(':valorTotal', $venda->getValorTotal());
+        $stmt->bindValue(':quantidadeItens', $venda->getQuantidadeItens());
 
         if ($stmt->execute()) {
             return true;
@@ -34,7 +34,7 @@ class VendaDAO
         $sql = "DELETE FROM vendas WHERE cod_venda = :codVenda";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':codVenda', $codVenda);
+        $stmt->bindValue(':codVenda', $codVenda);
 
         if ($stmt->execute()) {
             return true;
@@ -43,15 +43,15 @@ class VendaDAO
         }
     }
 
-    public function atualizarVenda(Venda $venda)
+    public function atualizarVenda($venda)
     {
         $sql = "UPDATE vendas SET valor_total = :valorTotal, quantidade_itens = :quantidadeItens
                 WHERE cod_venda = :codVenda";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':valorTotal', $venda->getValorTotal());
-        $stmt->bindParam(':quantidadeItens', $venda->getQuantidadeItens());
-        $stmt->bindParam(':codVenda', $venda->getCodVenda());
+        $stmt->bindValue(':valorTotal', $venda->getValorTotal());
+        $stmt->bindValue(':quantidadeItens', $venda->getQuantidadeItens());
+        $stmt->bindValue(':codVenda', $venda->getCodVenda());
 
         if ($stmt->execute()) {
             return true;
@@ -65,7 +65,7 @@ class VendaDAO
         $sql = "SELECT * FROM vendas WHERE cod_venda = :codVenda";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':codVenda', $codVenda);
+        $stmt->bindValue(':codVenda', $codVenda);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);

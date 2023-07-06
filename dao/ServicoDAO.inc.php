@@ -11,16 +11,16 @@ class ServicoDAO
         $this->conexao = $con->getConexao();
     }
 
-    public function inserirServico(Servico $servico)
+    public function inserirServico($servico)
     {
         $sql = "INSERT INTO servicos (nome, valor, descricao, id_tipo)
                 VALUES (:nome, :valor, :descricao, :idTipo)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $servico->getNome());
-        $stmt->bindParam(':valor', $servico->getValor());
-        $stmt->bindParam(':descricao', $servico->getDescricao());
-        $stmt->bindParam(':idTipo', $servico->getIdTipo());
+        $stmt->bindValue(':nome', $servico->getNome());
+        $stmt->bindValue(':valor', $servico->getValor());
+        $stmt->bindValue(':descricao', $servico->getDescricao());
+        $stmt->bindValue(':idTipo', $servico->getIdTipo());
 
         if ($stmt->execute()) {
             return true;
@@ -34,7 +34,7 @@ class ServicoDAO
         $sql = "DELETE FROM servicos WHERE id_servico = :idServico";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':idServico', $idServico);
+        $stmt->bindValue(':idServico', $idServico);
 
         if ($stmt->execute()) {
             return true;
@@ -43,17 +43,17 @@ class ServicoDAO
         }
     }
 
-    public function atualizarServico(Servico $servico)
+    public function atualizarServico($servico)
     {
         $sql = "UPDATE servicos SET nome = :nome, valor = :valor, descricao = :descricao, id_tipo = :idTipo
                 WHERE id_servico = :idServico";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $servico->getNome());
-        $stmt->bindParam(':valor', $servico->getValor());
-        $stmt->bindParam(':descricao', $servico->getDescricao());
-        $stmt->bindParam(':idTipo', $servico->getIdTipo());
-        $stmt->bindParam(':idServico', $servico->getIdServico());
+        $stmt->bindValue(':nome', $servico->getNome());
+        $stmt->bindValue(':valor', $servico->getValor());
+        $stmt->bindValue(':descricao', $servico->getDescricao());
+        $stmt->bindValue(':idTipo', $servico->getIdTipo());
+        $stmt->bindValue(':idServico', $servico->getIdServico());
 
         if ($stmt->execute()) {
             return true;
@@ -67,7 +67,7 @@ class ServicoDAO
         $sql = "SELECT * FROM servicos WHERE id_servico = :idServico";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':idServico', $idServico);
+        $stmt->bindValue(':idServico', $idServico);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
