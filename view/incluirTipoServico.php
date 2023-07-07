@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once './includes/cabecalho.inc.php';
 require_once '../utils/utils.inc.php';
 

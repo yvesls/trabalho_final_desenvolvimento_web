@@ -13,14 +13,30 @@ $opcao = $_REQUEST["opcao"];
     $opcao == "buscarServicoPorPaginaVenda"
 */
 
-if ($opcao == "incluir") {
-    $retorno_verificacao = validate("incluir");
-    if ($retorno_verificacao == null) {
-        incluirProduto();
-    } else {
-        session_start();
-        $_SESSION['erro2'] = $retorno_verificacao;
-        header("Location:../views/formProdutos.php?erro=2");
+if ($opcao == "incluirServico") {
+    $ts = new Servico();
+    $ts->setNome($_POST['nome']);
+    $ts->setDescricao($_POST['descricao']);
+    $ts->setValor($_POST['valor']);
+    $ts->setIdTipo($_POST['tipo-servico-nome']);
+    $tsDAO = new ServicoDAO();
+    $idGerado = $tsDAO->inserirServico($ts);
+
+    session_start();
+    if(isset($idGerado)) {
+        $_SESSION['sucesso'] = "Registrado com sucesso.";
+        $datasDisponiveis = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $fieldName = 'data-' . $i;
+            if (isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) {
+                $datasDisponiveis[] = $_POST[$fieldName];
+            }
+        }
+        $_SESSION["datasDisponiveis"] = $datasDisponiveis;
+        header("Location:controllerDataDisponivel.php?opcao=incluirDatasDisponiveis&idServico=$idGerado");
+    }else {
+        $_SESSION['erro'] = "Ocorreu um erro inesperado. Contacte o administrador do sistema.";
+        header("Location:../view/incluirServico.php");
     }
 }
 

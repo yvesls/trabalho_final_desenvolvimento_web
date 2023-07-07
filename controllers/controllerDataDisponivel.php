@@ -13,3 +13,22 @@ $opcao = $_REQUEST["opcao"];
     $opcao == "buscarServicoPorPagina"
 */
 
+if($opcao == "incluirDatasDisponiveis") {
+    session_start();
+    $idServico = $_REQUEST["idServico"];
+    $inclusoesQtd = 0;
+    $dtDisDAO = new DataDisponivelDAO();
+    foreach($_SESSION["datasDisponiveis"] as $datas) {
+        $dtDis = new DataDisponivel();
+        $dtDis->setData($datas);
+        $dtDis->setidServico($idServico);
+        $dtDis->setDisponivel(true);
+        if($dtDisDAO->inserirDataDisponivel($dtDis)) {
+            $inclusoesQtd ++;
+            echo "true";
+        }
+    }
+    if(count($_SESSION["datasDisponiveis"]) == $inclusoesQtd) {
+        header("Location:../view/incluirServico.php");
+    }
+}

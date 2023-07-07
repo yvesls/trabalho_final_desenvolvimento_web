@@ -1,17 +1,12 @@
 <?php
-require_once 'includes/cabecalho.inc.php';
+require_once '../model/Cliente.inc.php';
 require_once '../model/tipoServico.inc.php';
-session_start();
+require_once '../utils/utils.inc.php';
+require_once 'includes/cabecalho.inc.php';
 
-if(isset($_SESSION["tipoServico"])) {
-    $tipoServicos = $_SESSION["tipoServico"];
-    foreach($tipoServicos as $ts) {
-        echo "<div value=''>". $ts->getNome() ."</div>";
-    }
-}
 ?>
+<h2 class="text-center">Formulário de Serviços</h2>
 <div class="container">
-    <h2>Formulário de Serviços</h2>
     <form action="../controllers/controllerServico.php" method="POST">
         <div class="form-group pb-3">
             <label for="nome">Nome *</label>
@@ -36,44 +31,41 @@ if(isset($_SESSION["tipoServico"])) {
                 <option value="">Selecione</option>
                 <?php 
                     if(isset($_SESSION["tipoServico"])) {
+                        $tipoServicos = $_SESSION["tipoServico"];
                         foreach($tipoServicos as $ts) {
-                            echo "<option value=". $ts->getIdTipo() .">". $ts->getNome() ."</option>";
+                            ?>
+                                <option value="<?= $ts->getIdTipo() ?>"><?= $ts->getNome() ?></option>
+                            <?php 
                         }
                     }
                 ?>
             </select>
         </div>
-        <div class="form-group pb-3">
-            <label for="data-1">Data 1 *</label>
-            <input type="date" class="form-control" name="data-1" required>
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-2">Data 2</label>
-            <input type="date" class="form-control" name="data-2">
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-3">Data 3</label>
-            <input type="date" class="form-control" name="data-3">
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-4">Data 4</label>
-            <input type="date" class="form-control" name="data-4">
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-5">Data 5</label>
-            <input type="date" class="form-control" name="data-5">
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-6">Data 6</label>
-            <input type="date" class="form-control" name="data-6">
-        </div>
-        <div class="form-group pb-3">
-            <label for="data-7">Data 7</label>
-            <input type="date" class="form-control" name="data-7">
-        </div>
+        <?php
+        for ($i = 1; $i <= 7; $i++) {
+            $label = "Data " . $i;
+            $name = "data-" . $i;
+            ?>
+            <div class="form-group pb-3">
+                <label for="<?= $name; ?>"><?= $label; ?></label>
+                <input type="date" class="form-control" name="<?= $name; ?>">
+            </div>
+            <?php
+        }
+        ?>
+        <input type="hidden" name="opcao" value="incluirServico">
         <button type="submit" class="btn btn-success">Salvar</button>
     </form>
 </div>
 <?php
+if (isset($_SESSION["erro"])) { 
+    $erro = $_SESSION["erro"];
+    unset($_SESSION["erro"]);
+    exibirMensagem($erro, "bg-danger", 2);
+} else if (isset($_SESSION["sucesso"])) {
+    $sucesso = $_SESSION["sucesso"];
+    unset($_SESSION["sucesso"]);
+    exibirMensagem($sucesso, "bg-success", 2);
+}
 require_once './includes/rodape.inc.php';
 ?>

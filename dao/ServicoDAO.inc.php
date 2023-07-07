@@ -13,19 +13,23 @@ class ServicoDAO
 
     public function inserirServico($servico)
     {
-        $sql = "INSERT INTO servicos (nome, valor, descricao, id_tipo)
-                VALUES (:nome, :valor, :descricao, :idTipo)";
+        try{
+            $sql = "INSERT INTO servicos (nome, valor, descricao, id_tipo)
+                    VALUES (:nome, :valor, :descricao, :idTipo)";
 
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(':nome', $servico->getNome());
-        $stmt->bindValue(':valor', $servico->getValor());
-        $stmt->bindValue(':descricao', $servico->getDescricao());
-        $stmt->bindValue(':idTipo', $servico->getIdTipo());
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(':nome', $servico->getNome());
+            $stmt->bindValue(':valor', $servico->getValor());
+            $stmt->bindValue(':descricao', $servico->getDescricao());
+            $stmt->bindValue(':idTipo', $servico->getIdTipo());
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
+            $stmt->execute();
+            $idGerado = $this->conexao->lastInsertId();
+
+            return $idGerado;
+        } catch (PDOException $e) {
+            echo "Erro: " . $e->getMessage();
+            return null;
         }
     }
 
