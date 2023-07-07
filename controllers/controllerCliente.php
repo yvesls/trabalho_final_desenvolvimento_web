@@ -24,5 +24,15 @@ if($opcao == 1){ // LOGIN
     session_start();
     unset($_SESSION["clienteLogado"]);
     header("Location: ../view/login.php");
+} elseif ($opcao == 3){ // OBTER
+    $clienteDAO = new ClienteDAO();
+
+    $clientes = $clienteDAO->buscarTodos();
+
+    session_start();
+
+    $_SESSION["clientes"] = $clientes;
+
+    header("Location: ../view/listarClientes.php");
 }
 ?>

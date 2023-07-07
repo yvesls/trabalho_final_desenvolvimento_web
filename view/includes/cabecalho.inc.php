@@ -40,14 +40,42 @@ $cliente = $_SESSION["clienteLogado"];
           <ul id="sidebarnav">
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Clientes</span>
+              <span class="hide-menu">Manutenção de Clientes</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.php" aria-expanded="false">
+              <a class="sidebar-link" href="./cadastrarCliente.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
                 <span class="hide-menu">Cadastrar Cliente</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="../controllers/controllerCliente.php?opcao=3" aria-expanded="false">
+                <span>
+                  <i class="ti ti-list"></i>
+                </span>
+                <span class="hide-menu">Listar Clientes</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Manutenção de Serviços</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./cadastrarServico.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user-plus"></i>
+                </span>
+                <span class="hide-menu">Cadastrar Serviço</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./listarServicos.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-list"></i>
+                </span>
+                <span class="hide-menu">Listar Serviços</span>
               </a>
             </li>
           </ul>
