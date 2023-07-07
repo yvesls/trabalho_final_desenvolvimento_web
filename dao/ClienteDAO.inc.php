@@ -49,7 +49,7 @@ class ClienteDAO
     public function atualizarCliente(Cliente $cliente)
     {
         $sql = "UPDATE clientes SET Nome = :nome, Endereco = :endereco, Telefone = :telefone, CPF = :cpf,
-                DtNascimento = :dataNascimento, Email = :email, Senha = :senha WHERE CodCli = :codCliente";
+                DtNascimento = :dataNascimento, Email = :email, Senha = :senha WHERE idCliente = :id";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindParam(':nome', $cliente->getNome());
@@ -59,7 +59,7 @@ class ClienteDAO
         $stmt->bindParam(':dataNascimento', $cliente->getDataNascimento());
         $stmt->bindParam(':email', $cliente->getEmail());
         $stmt->bindParam(':senha', $cliente->getSenha());
-        $stmt->bindParam(':codCliente', $cliente->getCodCliente());
+        $stmt->bindParam(':id', $cliente->getId());
 
         if ($stmt->execute()) {
             return true;
@@ -68,12 +68,12 @@ class ClienteDAO
         }
     }
 
-    public function buscarPorId($codCliente)
+    public function buscarPorId($id)
     {
-        $sql = "SELECT * FROM clientes WHERE CodCli = :codCliente";
+        $sql = "SELECT * FROM clientes WHERE idCliente = :id";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':codCliente', $codCliente);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -105,7 +105,7 @@ class ClienteDAO
     private function criarCliente($dados)
     {
         $cliente = new Cliente();
-        $cliente->setCodCliente($dados['CodCli']);
+        $cliente->setId($dados['idCliente']);
         $cliente->setNome($dados['Nome']);
         $cliente->setEndereco($dados['Endereco']);
         $cliente->setTelefone($dados['Telefone']);
@@ -114,5 +114,29 @@ class ClienteDAO
         $cliente->setEmail($dados['Email']);
 
         return $cliente;
+    }
+
+    function autenticar($email, $senha) {
+        $con = new Conexao();
+        $conexao = $con->getConexao();
+    
+        $sql = $conexao->prepare("SELECT * FROM clientes WHERE Email = :email AND Senha = :pass");
+    
+        $email = strtolower($email);
+    
+        $sql->bindValue(':email', $email);
+        $sql->bindValue(':pass', $senha);
+        $sql->execute();
+
+        $count = $sql->rowCount();
+
+        if($count == 1) {
+            $row = $sql->fetch(PDO::FETCH_ASSOC);
+            $cliente = $this->criarCliente($row);
+            return $cliente;
+        }
+
+        return null;
+    
     }
 }
