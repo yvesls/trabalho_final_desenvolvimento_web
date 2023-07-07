@@ -1,5 +1,15 @@
+<?php
+require_once("../model/Cliente.inc.php");
+
+session_start();
+if (!isset($_SESSION["clienteLogado"])) {
+  header("Location: ./login.php");
+  exit;
+}
+$cliente = $_SESSION["clienteLogado"];
+?>
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8">
@@ -61,7 +71,7 @@
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-            <span>admin@email.com</span>
+            <span><?=$cliente->getEmail()?></span>
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -73,7 +83,7 @@
                       <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">Meu Perfil</p>
                     </a>
-                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Sair</a>
+                    <a href="../controllers/controllerCliente.php?opcao=2" class="btn btn-outline-primary mx-3 mt-2 d-block">Sair</a>
                   </div>
                 </div>
               </li>
