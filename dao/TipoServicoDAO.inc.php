@@ -11,14 +11,13 @@ class TipoServicoDAO
         $this->conexao = $con->getConexao();
     }
 
-    public function inserirTipoServico(TipoServico $tipoServico)
+    public function inserirTipoServico($tipoServico)
     {
-        $sql = "INSERT INTO tipo (nome, valor)
-                VALUES (:nome, :valor)";
+        $sql = "INSERT INTO tipo (nome)
+                VALUES (:nome)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $tipoServico->getNome());
-        $stmt->bindParam(':valor', $tipoServico->getValor());
+        $stmt->bindValue(':nome', $tipoServico->getNome());
 
         if ($stmt->execute()) {
             return true;
@@ -32,7 +31,7 @@ class TipoServicoDAO
         $sql = "DELETE FROM tipo WHERE id_tipo = :idTipo";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':idTipo', $idTipo);
+        $stmt->bindValue(':idTipo', $idTipo);
 
         if ($stmt->execute()) {
             return true;
@@ -41,15 +40,14 @@ class TipoServicoDAO
         }
     }
 
-    public function atualizarTipoServico(TipoServico $tipoServico)
+    public function atualizarTipoServico($tipoServico)
     {
-        $sql = "UPDATE tipo SET nome = :nome, valor = :valor
+        $sql = "UPDATE tipo SET nome = :nome
                 WHERE id_tipo = :idTipo";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $tipoServico->getNome());
-        $stmt->bindParam(':valor', $tipoServico->getValor());
-        $stmt->bindParam(':idTipo', $tipoServico->getIdTipo());
+        $stmt->bindValue(':nome', $tipoServico->getNome());
+        $stmt->bindValue(':idTipo', $tipoServico->getIdTipo());
 
         if ($stmt->execute()) {
             return true;
@@ -63,7 +61,7 @@ class TipoServicoDAO
         $sql = "SELECT * FROM tipo WHERE id_tipo = :idTipo";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':idTipo', $idTipo);
+        $stmt->bindValue(':idTipo', $idTipo);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -95,10 +93,10 @@ class TipoServicoDAO
     private function criarTipoServico($dados)
     {
         $tipoServico = new TipoServico();
+        echo $dados['id_tipo'];
+        echo $dados['nome'];
         $tipoServico->setIdTipo($dados['id_tipo']);
         $tipoServico->setNome($dados['nome']);
-        $tipoServico->setValor($dados['valor']);
-
         return $tipoServico;
     }
 }

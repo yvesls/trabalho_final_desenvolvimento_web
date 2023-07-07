@@ -3,16 +3,14 @@ class TipoServico
 {
     private $id_tipo;
     private $nome;
-    private $valor;
 
     public function __construct()
     {
     }
 
-    public function setTipoServico($nome, $valor)
+    public function setTipoServico($nome)
     {
         $this->nome = $nome;
-        $this->valor = $valor;
     }
 
 
@@ -34,15 +32,5 @@ class TipoServico
     public function setNome($nome)
     {
         $this->nome = $nome;
-    }
-
-    public function getValor()
-    {
-        return $this->valor;
-    }
-
-    public function setValor($valor)
-    {
-        $this->valor = $valor;
     }
 }

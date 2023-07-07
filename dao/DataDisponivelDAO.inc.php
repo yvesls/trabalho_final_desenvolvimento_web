@@ -11,15 +11,15 @@ class DataDisponivelDAO
         $this->conexao = $con->getConexao();
     }
 
-    public function inserirDataDisponivel(DataDisponivel $dataDisponivel)
+    public function inserirDataDisponivel($dataDisponivel)
     {
         $sql = "INSERT INTO datasdisponiveis (id_servico, data, disponivel)
                 VALUES (:idServico, :data, :disponivel)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':idServico', $dataDisponivel->getIdServico());
-        $stmt->bindParam(':data', $dataDisponivel->getData());
-        $stmt->bindParam(':disponivel', $dataDisponivel->getDisponivel());
+        $stmt->bindValue(':idServico', $dataDisponivel->getIdServico());
+        $stmt->bindValue(':data', $dataDisponivel->getData());
+        $stmt->bindValue(':disponivel', $dataDisponivel->getDisponivel());
 
         if ($stmt->execute()) {
             return true;
@@ -33,7 +33,7 @@ class DataDisponivelDAO
         $sql = "DELETE FROM datasdisponiveis WHERE id_disponibilidade = :id";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
 
         if ($stmt->execute()) {
             return true;
@@ -47,9 +47,9 @@ class DataDisponivelDAO
         $sql = "UPDATE datasdisponiveis SET data = :data, disponivel = :disponivel WHERE id_disponibilidade = :id";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':data', $dataDisponivel->getData());
-        $stmt->bindParam(':disponivel', $dataDisponivel->getDisponivel());
-        $stmt->bindParam(':id', $dataDisponivel->getIdDisponibilidade());
+        $stmt->bindValue(':data', $dataDisponivel->getData());
+        $stmt->bindValue(':disponivel', $dataDisponivel->getDisponivel());
+        $stmt->bindValue(':id', $dataDisponivel->getIdDisponibilidade());
         if ($stmt->execute()) {
             return true;
         } else {
@@ -62,7 +62,7 @@ class DataDisponivelDAO
         $sql = "SELECT * FROM datasdisponiveis WHERE id_disponibilidade = :id";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);

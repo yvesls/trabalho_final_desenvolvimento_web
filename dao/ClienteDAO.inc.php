@@ -11,19 +11,19 @@ class ClienteDAO
         $this->conexao = $con->getConexao();
     }
 
-    public function inserirCliente(Cliente $cliente)
+    public function inserirCliente($cliente)
     {
         $sql = "INSERT INTO clientes (Nome, Endereco, Telefone, CPF, DtNascimento, Email, Senha)
                 VALUES (:nome, :endereco, :telefone, :cpf, :dataNascimento, :email, :senha)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $cliente->getNome());
-        $stmt->bindParam(':endereco', $cliente->getEndereco());
-        $stmt->bindParam(':telefone', $cliente->getTelefone());
-        $stmt->bindParam(':cpf', $cliente->getCpf());
-        $stmt->bindParam(':dataNascimento', $cliente->getDataNascimento());
-        $stmt->bindParam(':email', $cliente->getEmail());
-        $stmt->bindParam(':senha', $cliente->getSenha());
+        $stmt->bindValue(':nome', $cliente->getNome());
+        $stmt->bindValue(':endereco', $cliente->getEndereco());
+        $stmt->bindValue(':telefone', $cliente->getTelefone());
+        $stmt->bindValue(':cpf', $cliente->getCpf());
+        $stmt->bindValue(':dataNascimento', $cliente->getDataNascimento());
+        $stmt->bindValue(':email', $cliente->getEmail());
+        $stmt->bindValue(':senha', $cliente->getSenha());
 
         if ($stmt->execute()) {
             return true;
@@ -37,7 +37,7 @@ class ClienteDAO
         $sql = "DELETE FROM clientes WHERE CodCli = :codCliente";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':codCliente', $codCliente);
+        $stmt->bindValue(':codCliente', $codCliente);
 
         if ($stmt->execute()) {
             return true;
