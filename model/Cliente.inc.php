@@ -1,7 +1,7 @@
 <?php
 class Cliente
 {
-    private $codCliente;
+    private $id;
     private $nome;
     private $endereco;
     private $telefone;
@@ -25,14 +25,14 @@ class Cliente
         $this->senha = $senha;
     }
 
-    public function getCodCliente()
+    public function getId()
     {
-        return $this->codCliente;
+        return $this->id;
     }
 
-    public function setCodCliente($codCliente)
+    public function setId($id)
     {
-        $this->codCliente = $codCliente;
+        $this->id = $id;
     }
 
     public function getNome()
