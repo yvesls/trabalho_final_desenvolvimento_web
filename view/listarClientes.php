@@ -22,11 +22,12 @@ if (isset($_SESSION['clientes'])) {
             foreach ($clientes as $cliente) {
             ?>
                 <tr>
-                    <th scope="row"><?=$cliente->getId()?></th>
-                    <td><?=$cliente->getNome()?></td>
-                    <td><?=$cliente->getEmail()?></td>
+                    <th scope="row"><?= $cliente->getId() ?></th>
+                    <td><?= $cliente->getNome() ?></td>
+                    <td><?= $cliente->getEmail() ?></td>
                     <td>
-                        <button type="button" class="btn btn-primary"><i class="ti ti-edit"></i></button>
+                        <a href="editarCliente.php?id=<?= $cliente->getId() ?>" class="btn btn-primary"><i class="ti ti-edit"></i></a>
+                        <!-- <button type="button" class="btn btn-primary"><i class="ti ti-edit"></i></button> -->
                         <button type="button" class="btn btn-danger"><i class="ti ti-trash"></i></button>
                     </td>
                 </tr>
