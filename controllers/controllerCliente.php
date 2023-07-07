@@ -7,6 +7,32 @@ $opcao = (int)$_REQUEST["opcao"];
 
 if ($opcao == 1) { // LOGIN
 
+    
+
+    if ($cliente != null) {
+        session_start();
+        $_SESSION["clienteLogado"] = $cliente;
+        header("Location: ../view/index.php");
+    } else {
+        header("Location: ../view/login.php?erro=1");
+    }
+} elseif ($opcao == 2) { // LOGOUT
+    session_start();
+    unset($_SESSION["clienteLogado"]);
+    header("Location: ../view/login.php");
+} elseif ($opcao == 3) { // OBTER
+    $clienteDAO = new ClienteDAO();
+
+    $clientes = $clienteDAO->buscarTodos();
+
+    session_start();
+
+    $_SESSION["clientes"] = $clientes;
+
+    header("Location: ../view/listarClientes.php");
+}
+
+else if($opcao == 4){ //CRIAR CLIENTE
     $nome = $_REQUEST["nome"];
     $telefone = $_REQUEST["telefone"];
     $cpf = $_REQUEST["cpf"];
@@ -30,26 +56,4 @@ if ($opcao == 1) { // LOGIN
     $cliente->setCliente($nome, $endereco, $telefone, $cpf, $dataNascimento, $email, $senha);
 
     $clienteDAO->inserirCliente($cliente);
-
-    if ($cliente != null) {
-        session_start();
-        $_SESSION["clienteLogado"] = $cliente;
-        header("Location: ../view/index.php");
-    } else {
-        header("Location: ../view/login.php?erro=1");
-    }
-} elseif ($opcao == 2) { // LOGOUT
-    session_start();
-    unset($_SESSION["clienteLogado"]);
-    header("Location: ../view/login.php");
-} elseif ($opcao == 3) { // OBTER
-    $clienteDAO = new ClienteDAO();
-
-    $clientes = $clienteDAO->buscarTodos();
-
-    session_start();
-
-    $_SESSION["clientes"] = $clientes;
-
-    header("Location: ../view/listarClientes.php");
 }

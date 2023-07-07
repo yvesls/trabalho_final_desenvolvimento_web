@@ -2,11 +2,11 @@
 require_once './includes/cabecalho.inc.php';
 ?>
 <div class="container mx-auto">
-    <h1 class="text-center">Cadastrar Cliente</h1>
+    <h1 class="text-center">Editar Cliente</h1>
     <div class="container d-flex justify-content-center align-items-center">
         <div class="row col-8">
             <div class="mx-auto">
-
+                
                 <form class="form-group mt-3 col mx-auto" id="formCliente" action="../controllers/controllerCliente.php" method="post">
 
                     <div class="row">
