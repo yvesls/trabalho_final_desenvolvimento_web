@@ -20,7 +20,7 @@ class Cliente
         $this->endereco = $endereco;
         $this->telefone = $telefone;
         $this->cpf = $cpf;
-        $this->dataNascimento = $dataNascimento;
+        $this->dataNascimento = date("Y-m-d", strtotime(str_replace("/", "-", $dataNascimento)));
         $this->email = $email;
         $this->senha = $senha;
     }

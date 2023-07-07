@@ -14,16 +14,25 @@ class ClienteDAO
     public function inserirCliente(Cliente $cliente)
     {
         $sql = "INSERT INTO clientes (Nome, Endereco, Telefone, CPF, DtNascimento, Email, Senha)
-                VALUES (:nome, :endereco, :telefone, :cpf, :dataNascimento, :email, :senha)";
+            VALUES (:nome, :endereco, :telefone, :cpf, :dataNascimento, :email, :senha)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $cliente->getNome());
-        $stmt->bindParam(':endereco', $cliente->getEndereco());
-        $stmt->bindParam(':telefone', $cliente->getTelefone());
-        $stmt->bindParam(':cpf', $cliente->getCpf());
-        $stmt->bindParam(':dataNascimento', $cliente->getDataNascimento());
-        $stmt->bindParam(':email', $cliente->getEmail());
-        $stmt->bindParam(':senha', $cliente->getSenha());
+
+        $nome = $cliente->getNome();
+        $endereco = $cliente->getEndereco();
+        $telefone = $cliente->getTelefone();
+        $cpf = $cliente->getCpf();
+        $dataNascimento = $cliente->getDataNascimento();
+        $email = $cliente->getEmail();
+        $senha = $cliente->getSenha();
+
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':endereco', $endereco);
+        $stmt->bindParam(':telefone', $telefone);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->bindParam(':dataNascimento', $dataNascimento);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
 
         if ($stmt->execute()) {
             return true;
@@ -31,6 +40,7 @@ class ClienteDAO
             return false;
         }
     }
+
 
     public function excluirCliente($codCliente)
     {
@@ -116,27 +126,27 @@ class ClienteDAO
         return $cliente;
     }
 
-    function autenticar($email, $senha) {
+    function autenticar($email, $senha)
+    {
         $con = new Conexao();
         $conexao = $con->getConexao();
-    
+
         $sql = $conexao->prepare("SELECT * FROM clientes WHERE Email = :email AND Senha = :pass");
-    
+
         $email = strtolower($email);
-    
+
         $sql->bindValue(':email', $email);
         $sql->bindValue(':pass', $senha);
         $sql->execute();
 
         $count = $sql->rowCount();
 
-        if($count == 1) {
+        if ($count == 1) {
             $row = $sql->fetch(PDO::FETCH_ASSOC);
             $cliente = $this->criarCliente($row);
             return $cliente;
         }
 
         return null;
-    
     }
 }
