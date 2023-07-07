@@ -3,6 +3,7 @@ require_once("../dao/Conexao.inc.php");
 require_once("../dao/ClienteDAO.inc.php");
 require_once("../model/Cliente.inc.php");
 
+//Autenticação
 $opcao = (int)$_REQUEST["opcao"];
 
 if ($opcao == 1) { // LOGIN
@@ -26,13 +27,13 @@ if ($opcao == 1) { // LOGIN
     header("Location: ../view/login.php");
 } elseif ($opcao == 3) { // OBTER
     //function atualizarClientes(){
-        $clienteDAO = new ClienteDAO();
-        $clientes = $clienteDAO->buscarTodos();
-        session_start();
-        $_SESSION["clientes"] = $clientes;
-        header("Location: ../view/listarClientes.php");
+    $clienteDAO = new ClienteDAO();
+    $clientes = $clienteDAO->buscarTodos();
+    session_start();
+    $_SESSION["clientes"] = $clientes;
+    header("Location: ../view/listarClientes.php");
     //}
-} else if ($opcao == 4) { //CRIAR CLIENTE
+} else if ($opcao == 4 || $opcao == 0) { //CRIAR CLIENTES
     $nome = $_REQUEST["nome"];
     $endereco = $_REQUEST["endereco"];
     $telefone = $_REQUEST["telefone"];
@@ -42,17 +43,25 @@ if ($opcao == 1) { // LOGIN
     $senha = $_REQUEST["senha"];
 
     $clienteDAO = new ClienteDAO();
-
     $cliente = new Cliente();
-
     $cliente->setCliente($nome, $endereco, $telefone, $cpf, $dataNascimento, $email, $senha);
-
     $clienteDAO->inserirCliente($cliente);
 
-    if ($cliente != null) {
-        header("Location:../view/cadastrarCliente.php?sucesso=1");
-    } else {
-        header("Location: ../view/cadastrarCliente.php?erro=1");
+    //Opção 4: Admin pode criar novos clientes
+    if ($opcao == 4) {
+        if ($cliente != null) {
+            header("Location:../view/cadastrarCliente.php?sucesso=1");
+        } else {
+            header("Location: ../view/cadastrarCliente.php?erro=1");
+        }
+    }
+    //Opção 0: Usuário pode criar uma nova conta
+    if ($opcao == 0) {
+        if ($cliente != null) {
+            header("Location: ../view/criarConta.php?sucesso=1");
+        } else {
+            header("Location: ../view/criarConta.php?erro=1");
+        }
     }
 } else if ($opcao == 5) { //EDITAR CLIENTE
     $id = $_REQUEST["id"];
