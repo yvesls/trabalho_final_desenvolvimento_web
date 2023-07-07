@@ -44,7 +44,7 @@ class ClienteDAO
 
     public function excluirCliente($codCliente)
     {
-        $sql = "DELETE FROM clientes WHERE CodCli = :codCliente";
+        $sql = "DELETE FROM clientes WHERE idCliente = :codCliente";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindParam(':codCliente', $codCliente);
@@ -68,7 +68,6 @@ class ClienteDAO
         $dataNascimento = $cliente->getDataNascimento();
         $email = $cliente->getEmail();
         $senha = $cliente->getSenha();
-        // $id = $cliente->getId();
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindParam(':nome', $nome);

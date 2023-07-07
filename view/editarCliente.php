@@ -107,14 +107,7 @@ require_once("../model/Cliente.inc.php");
 </div>
 
 <?php
-                    } else {
-                        // Se o cliente não foi encontrado, exiba uma mensagem de erro ou redirecione para uma página de erro
-                        // ...
                     }
-                } else {
-                    // Se nenhum ID de cliente foi fornecido na URL, exiba uma mensagem de erro ou redirecione para uma página de erro
-                    // ...
                 }
-
                 require_once './includes/rodape.inc.php';
 ?>

@@ -6,7 +6,6 @@ require_once './includes/cabecalho.inc.php';
 <?php
 if (isset($_SESSION['clientes'])) {
     $clientes = $_SESSION['clientes'];
-
 ?>
     <table class="table table-bordered">
         <thead>
@@ -27,8 +26,7 @@ if (isset($_SESSION['clientes'])) {
                     <td><?= $cliente->getEmail() ?></td>
                     <td>
                         <a href="editarCliente.php?id=<?= $cliente->getId() ?>" class="btn btn-primary"><i class="ti ti-edit"></i></a>
-                        <!-- <button type="button" class="btn btn-primary"><i class="ti ti-edit"></i></button> -->
-                        <button type="button" class="btn btn-danger"><i class="ti ti-trash"></i></button>
+                        <a href="../controllers/controllerCliente.php?opcao=6&id=<?= $cliente->getId() ?>" class="btn btn-danger"><i class="ti ti-trash"></i></a>
                     </td>
                 </tr>
             <?php

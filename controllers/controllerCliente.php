@@ -25,15 +25,13 @@ if ($opcao == 1) { // LOGIN
     unset($_SESSION["clienteLogado"]);
     header("Location: ../view/login.php");
 } elseif ($opcao == 3) { // OBTER
-    $clienteDAO = new ClienteDAO();
-
-    $clientes = $clienteDAO->buscarTodos();
-
-    session_start();
-
-    $_SESSION["clientes"] = $clientes;
-
-    header("Location: ../view/listarClientes.php");
+    //function atualizarClientes(){
+        $clienteDAO = new ClienteDAO();
+        $clientes = $clienteDAO->buscarTodos();
+        session_start();
+        $_SESSION["clientes"] = $clientes;
+        header("Location: ../view/listarClientes.php");
+    //}
 } else if ($opcao == 4) { //CRIAR CLIENTE
     $nome = $_REQUEST["nome"];
     $endereco = $_REQUEST["endereco"];
@@ -76,4 +74,10 @@ if ($opcao == 1) { // LOGIN
     } else {
         header("Location: ../view/editarCliente.php?erro=1");
     }
+} else if ($opcao == 6) { //EXCLUIR CLIENTE
+    $id = $_REQUEST["id"];
+    $clienteDAO = new ClienteDAO();
+    $clienteDAO->excluirCliente($id);
+    //atualizarClientes();
+    header("Location: ../controllers/controllerCliente.php?opcao=3");
 }
