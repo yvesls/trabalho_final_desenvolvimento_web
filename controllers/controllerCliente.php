@@ -53,11 +53,11 @@ if ($opcao == 1) { // LOGIN
 
     if ($cliente != null) {
         header("Location:../view/cadastrarCliente.php?sucesso=1");
-        //header("refresh:3; url=../view/login.php");
     } else {
         header("Location: ../view/cadastrarCliente.php?erro=1");
     }
 } else if ($opcao == 5) { //EDITAR CLIENTE
+    $id = $_REQUEST["id"];
     $nome = $_REQUEST["nome"];
     $endereco = $_REQUEST["endereco"];
     $telefone = $_REQUEST["telefone"];
@@ -67,17 +67,13 @@ if ($opcao == 1) { // LOGIN
     $senha = $_REQUEST["senha"];
 
     $clienteDAO = new ClienteDAO();
-
     $cliente = new Cliente();
-
     $cliente->setCliente($nome, $endereco, $telefone, $cpf, $dataNascimento, $email, $senha);
-
-    $clienteDAO->inserirCliente($cliente);
+    $clienteDAO->atualizarCliente($cliente, $id);
 
     if ($cliente != null) {
-        header("Location:../view/cadastrarCliente.php?sucesso=1");
-        //header("refresh:3; url=../view/login.php");
+        header("Location: ../view/editarCliente.php?sucesso=1");
     } else {
-        header("Location: ../view/cadastrarCliente.php?erro=1");
+        header("Location: ../view/editarCliente.php?erro=1");
     }
 }

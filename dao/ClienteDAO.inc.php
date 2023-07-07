@@ -56,20 +56,29 @@ class ClienteDAO
         }
     }
 
-    public function atualizarCliente(Cliente $cliente)
+    public function atualizarCliente(Cliente $cliente, $id)
     {
         $sql = "UPDATE clientes SET Nome = :nome, Endereco = :endereco, Telefone = :telefone, CPF = :cpf,
                 DtNascimento = :dataNascimento, Email = :email, Senha = :senha WHERE idCliente = :id";
 
+        $nome = $cliente->getNome();
+        $endereco = $cliente->getEndereco();
+        $telefone = $cliente->getTelefone();
+        $cpf = $cliente->getCpf();
+        $dataNascimento = $cliente->getDataNascimento();
+        $email = $cliente->getEmail();
+        $senha = $cliente->getSenha();
+        // $id = $cliente->getId();
+
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $cliente->getNome());
-        $stmt->bindParam(':endereco', $cliente->getEndereco());
-        $stmt->bindParam(':telefone', $cliente->getTelefone());
-        $stmt->bindParam(':cpf', $cliente->getCpf());
-        $stmt->bindParam(':dataNascimento', $cliente->getDataNascimento());
-        $stmt->bindParam(':email', $cliente->getEmail());
-        $stmt->bindParam(':senha', $cliente->getSenha());
-        $stmt->bindParam(':id', $cliente->getId());
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':endereco', $endereco);
+        $stmt->bindParam(':telefone', $telefone);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->bindParam(':dataNascimento', $dataNascimento);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
+        $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {
             return true;

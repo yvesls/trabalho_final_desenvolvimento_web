@@ -24,7 +24,7 @@ require_once './includes/cabecalho.inc.php';
                         <script>
                             setTimeout(function() {
                                 window.location.href = '../view/login.php';
-                            }, 3000);
+                            }, 2000);
                         </script>
                 <?php
                     }
