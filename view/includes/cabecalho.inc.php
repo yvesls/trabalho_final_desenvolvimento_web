@@ -65,7 +65,7 @@ $cliente = $_SESSION["clienteLogado"];
             <li class="sidebar-item">
               <a class="sidebar-link" href="../controllers/controllerTipoServico.php?opcao=buscarTipoServicoParaIncluirServico" aria-expanded="false">
                 <span>
-                  <i class="ti ti-user-plus"></i>
+                  <i class="ti ti-settings"></i>
                 </span>
                 <span class="hide-menu">Cadastrar Serviço</span>
               </a>
@@ -73,7 +73,7 @@ $cliente = $_SESSION["clienteLogado"];
             <li class="sidebar-item">
               <a class="sidebar-link" href="./incluirTipoServico.php" aria-expanded="false">
                 <span>
-                  <i class="ti ti-user-plus"></i>
+                  <i class="ti ti-settings"></i>
                 </span>
                 <span class="hide-menu">Cadastrar Tipo de Serviço</span>
               </a>
