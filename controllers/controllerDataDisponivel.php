@@ -40,8 +40,8 @@ if($opcao == "alterarDatasDisponiveis"){
     $dtDisDAO = new DataDisponivelDAO();
     $dtServico = $dtDisDAO->getDataByServicoId($idServico);
     $idDatasDisponiveis = [];
-    for ($i = 1; $i <= 7; $i++) {
-        $fieldName = 'data-' . $i . "-id";
+    for ($i = 0; $i < 7; $i++) {
+        $fieldName = 'data-' . $i+1 . "-id";
         if (isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) {
             $idDatasDisponiveis[] = (int) $_POST[$fieldName];
         }

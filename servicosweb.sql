@@ -76,7 +76,6 @@ INSERT INTO `clientes` (`Nome`, `Endereco`, `Telefone`, `CPF`, `DtNascimento`, `
 
 CREATE TABLE `datasdisponiveis` (
   `id_servico` int(11) NOT NULL,
-  `id_disponibilidade` int(11) NOT NULL,
   `data` date NOT NULL,
   `disponivel` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -88,7 +87,7 @@ CREATE TABLE `datasdisponiveis` (
 --
 
 CREATE TABLE `servicos` (
-  `id_servico` int(11) NOT NULL,
+  `id_servico` INT PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `valor` float NOT NULL,
   `descricao` text NOT NULL,
@@ -102,7 +101,7 @@ CREATE TABLE `servicos` (
 --
 
 CREATE TABLE `tipo` (
-  `id_tipo` int(11) NOT NULL,
+  `id_tipo` INT PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -128,15 +127,7 @@ CREATE TABLE `vendas` (
 -- Indexes for table `datasdisponiveis`
 --
 ALTER TABLE `datasdisponiveis`
-  ADD PRIMARY KEY (`id_disponibilidade`);
-
---
--- Indexes for table `tipo`
---
-ALTER TABLE `tipo`
-  ADD PRIMARY KEY (`id_tipo`);
-ALTER TABLE `tipo`
-  ADD AUTO_INCREMENT (`id_tipo`);
+  ADD `id_disponibilidade` INT PRIMARY KEY AUTO_INCREMENT;
 
 --
 -- Indexes for table `vendas`
@@ -144,11 +135,6 @@ ALTER TABLE `tipo`
 ALTER TABLE `vendas`
   ADD UNIQUE KEY `Cod_venda` (`Cod_venda`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-  ALTER TABLE `servicos`
-  ADD AUTO_INCREMENT (`id_servico`);
 --
 -- AUTO_INCREMENT for table `vendas`
 --
