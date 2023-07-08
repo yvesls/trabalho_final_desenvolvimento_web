@@ -14,9 +14,10 @@ class ClienteDAO
     public function inserirCliente($cliente)
     {
         $sql = "INSERT INTO clientes (Nome, Endereco, Telefone, CPF, DtNascimento, Email, Senha)
-                VALUES (:nome, :endereco, :telefone, :cpf, :dataNascimento, :email, :senha)";
+            VALUES (:nome, :endereco, :telefone, :cpf, :dataNascimento, :email, :senha)";
 
         $stmt = $this->conexao->prepare($sql);
+
         $stmt->bindValue(':nome', $cliente->getNome());
         $stmt->bindValue(':endereco', $cliente->getEndereco());
         $stmt->bindValue(':telefone', $cliente->getTelefone());
@@ -32,9 +33,10 @@ class ClienteDAO
         }
     }
 
+
     public function excluirCliente($codCliente)
     {
-        $sql = "DELETE FROM clientes WHERE CodCli = :codCliente";
+        $sql = "DELETE FROM clientes WHERE idCliente = :codCliente";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':codCliente', $codCliente);
@@ -46,20 +48,28 @@ class ClienteDAO
         }
     }
 
-    public function atualizarCliente(Cliente $cliente)
+    public function atualizarCliente(Cliente $cliente, $id)
     {
         $sql = "UPDATE clientes SET Nome = :nome, Endereco = :endereco, Telefone = :telefone, CPF = :cpf,
                 DtNascimento = :dataNascimento, Email = :email, Senha = :senha WHERE idCliente = :id";
 
+        $nome = $cliente->getNome();
+        $endereco = $cliente->getEndereco();
+        $telefone = $cliente->getTelefone();
+        $cpf = $cliente->getCpf();
+        $dataNascimento = $cliente->getDataNascimento();
+        $email = $cliente->getEmail();
+        $senha = $cliente->getSenha();
+
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':nome', $cliente->getNome());
-        $stmt->bindParam(':endereco', $cliente->getEndereco());
-        $stmt->bindParam(':telefone', $cliente->getTelefone());
-        $stmt->bindParam(':cpf', $cliente->getCpf());
-        $stmt->bindParam(':dataNascimento', $cliente->getDataNascimento());
-        $stmt->bindParam(':email', $cliente->getEmail());
-        $stmt->bindParam(':senha', $cliente->getSenha());
-        $stmt->bindParam(':id', $cliente->getId());
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':endereco', $endereco);
+        $stmt->bindParam(':telefone', $telefone);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->bindParam(':dataNascimento', $dataNascimento);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
+        $stmt->bindParam(':id', $id);
 
         if ($stmt->execute()) {
             return true;
@@ -116,27 +126,27 @@ class ClienteDAO
         return $cliente;
     }
 
-    function autenticar($email, $senha) {
+    function autenticar($email, $senha)
+    {
         $con = new Conexao();
         $conexao = $con->getConexao();
-    
+
         $sql = $conexao->prepare("SELECT * FROM clientes WHERE Email = :email AND Senha = :pass");
-    
+
         $email = strtolower($email);
-    
+
         $sql->bindValue(':email', $email);
         $sql->bindValue(':pass', $senha);
         $sql->execute();
 
         $count = $sql->rowCount();
 
-        if($count == 1) {
+        if ($count == 1) {
             $row = $sql->fetch(PDO::FETCH_ASSOC);
             $cliente = $this->criarCliente($row);
             return $cliente;
         }
 
         return null;
-    
     }
 }
