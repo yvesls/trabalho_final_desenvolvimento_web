@@ -1,7 +1,15 @@
 <?php
 require_once './includes/cabecalho.inc.php';
 require_once '../utils/utils.inc.php';
-
+if (isset($_SESSION["erro"])) { 
+    $erro = $_SESSION["erro"];
+    unset($_SESSION["erro"]);
+    exibirMensagem($erro, "bg-danger", 2);
+} else if (isset($_SESSION["sucesso"])) {
+    $sucesso = $_SESSION["sucesso"];
+    unset($_SESSION["sucesso"]);
+    exibirMensagem($sucesso, "bg-success", 2);
+}
 ?>
 <div class="container">
     <h2>Formulário de Tipos de Serviços Ofertados</h2>
@@ -15,14 +23,5 @@ require_once '../utils/utils.inc.php';
     </form>    
 </div>
 <?php
-if (isset($_SESSION["erro"])) { 
-    $erro = $_SESSION["erro"];
-    unset($_SESSION["erro"]);
-    exibirMensagem($erro, "bg-danger", 2);
-} else if (isset($_SESSION["sucesso"])) {
-    $sucesso = $_SESSION["sucesso"];
-    unset($_SESSION["sucesso"]);
-    exibirMensagem($sucesso, "bg-success", 2);
-}
 require_once './includes/rodape.inc.php';
 ?>

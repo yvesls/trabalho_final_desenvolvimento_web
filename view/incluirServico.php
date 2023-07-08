@@ -1,5 +1,4 @@
 <?php
-require_once '../model/Cliente.inc.php';
 require_once '../model/tipoServico.inc.php';
 require_once '../utils/utils.inc.php';
 require_once 'includes/cabecalho.inc.php';

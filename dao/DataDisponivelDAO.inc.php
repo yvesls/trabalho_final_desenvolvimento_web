@@ -42,7 +42,7 @@ class DataDisponivelDAO
         }
     }
 
-    public function atualizarDataDisponivel(DataDisponivel $dataDisponivel)
+    public function atualizarDataDisponivel($dataDisponivel)
     {
         $sql = "UPDATE datasdisponiveis SET data = :data, disponivel = :disponivel WHERE id_disponibilidade = :id";
 
@@ -72,6 +72,22 @@ class DataDisponivelDAO
         } else {
             return null;
         }
+    }
+
+    public function getDataByServicoId($id) {
+        $sql = "SELECT * FROM datasdisponiveis dt WHERE dt.id_servico = :id";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $datasDisponiveis = [];
+
+        foreach ($resultados as $resultado) {
+            $datasDisponiveis[] = $this->criarDataDisponivel($resultado);
+        }
+        return $datasDisponiveis;
     }
 
     public function buscarTodos()

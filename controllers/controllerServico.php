@@ -18,7 +18,7 @@ if ($opcao == "incluirServico") {
     $ts->setNome($_POST['nome']);
     $ts->setDescricao($_POST['descricao']);
     $ts->setValor($_POST['valor']);
-    $ts->setIdTipo($_POST['tipo-servico-nome']);
+    $ts->setTipo($_POST['tipo-servico-nome']);
     $tsDAO = new ServicoDAO();
     $idGerado = $tsDAO->inserirServico($ts);
 
@@ -40,26 +40,27 @@ if ($opcao == "incluirServico") {
     }
 }
 
-if ($opcao == "exibirTodos" || $opcao == "exibirProdutosVenda") {    //Exibir todos os produtos
-
-    $produtoDAO = new ProdutoDAO();
-    $listaProdutos = $produtoDAO->getProdutos();
-    //Coloca a lista de produtos na sessão
+if ($opcao == "buscarServicoPorPagina") {
+    $pagina = (int) $_REQUEST["pagina"];
+    $sDAO = new ServicoDAO();
+    $lista = $sDAO->buscarTodos($pagina);
+    $numPaginas = $sDAO->getPagina();
     session_start();
-    $_SESSION["produtos"] = $listaProdutos;
-    if ($opcao == "exibirTodos") {
-        header("Location: ../views/exibirProdutos.php");
-    } else {
-        header("Location: ../views/exibirProdutosVenda.php");
-    }
+    $_SESSION["servicos"] = $lista;
+    header("Location:../../view/exibirServicos.php?paginas=$numPaginas");
 }
 
-if ($opcao == "excluir") {
-    $id = $_REQUEST['id'];
-    $ProdutoDAO = new ProdutoDAO();
-    deletarFoto($produtoDao->getProduto($id)->getReferencia());
-    $ProdutoDAO->excluirProduto($id);
-    header('Location: controllers/../controllerProduto.php?opcao=exibirTodos');
+if ($opcao == "excluirServico") {
+    $pagina = (int) $_REQUEST["pagina"];
+    $id = $_REQUEST['idServico'];
+    $ServicoDAO = new ServicoDAO();
+    
+    if($ServicoDAO->excluirServico($id)) {
+        $_SESSION['sucesso'] = "Registrado com sucesso.";
+    }else {
+        $_SESSION['erro'] = "Ocorreu um erro inesperado. Contacte o administrador do sistema.";
+    }
+    header("Location: controllerServico.php?opcao=buscarServicoPorPagina&pagina=$pagina");
 }
 if ($opcao == "buscarPorId") {
     $id = $_REQUEST['id'];
