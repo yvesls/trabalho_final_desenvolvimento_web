@@ -26,13 +26,11 @@ if ($opcao == 1) { // LOGIN
     unset($_SESSION["clienteLogado"]);
     header("Location: ../view/login.php");
 } elseif ($opcao == 3) { // OBTER
-    //function atualizarClientes(){
     $clienteDAO = new ClienteDAO();
     $clientes = $clienteDAO->buscarTodos();
     session_start();
     $_SESSION["clientes"] = $clientes;
     header("Location: ../view/listarClientes.php");
-    //}
 } else if ($opcao == 4 || $opcao == 0) { //CRIAR CLIENTES
     $nome = $_REQUEST["nome"];
     $endereco = $_REQUEST["endereco"];
@@ -50,7 +48,7 @@ if ($opcao == 1) { // LOGIN
     //Opção 4: Admin pode criar novos clientes
     if ($opcao == 4) {
         if ($cliente != null) {
-            header("Location:../view/cadastrarCliente.php?sucesso=1");
+            header("Location: ../view/cadastrarCliente.php?sucesso=1");
         } else {
             header("Location: ../view/cadastrarCliente.php?erro=1");
         }
