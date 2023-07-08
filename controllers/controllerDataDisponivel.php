@@ -40,29 +40,29 @@ if($opcao == "alterarDatasDisponiveis"){
     $dtDisDAO = new DataDisponivelDAO();
     $dtServico = $dtDisDAO->getDataByServicoId($idServico);
     $idDatasDisponiveis = [];
-    for ($i = 0; $i < 7; $i++) {
-        $fieldName = 'data-' . $i+1 . "-id";
-        if (isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) {
-            $idDatasDisponiveis[] = (int) $_POST[$fieldName];
-        }
-    }
-    foreach($_SESSION["datasDisponiveis"] as $k => $datas) {
-        $dtDis = new DataDisponivel();
-        if($dtServico[$k]->getIdDisponibilidade() == $idDatasDisponiveis[$k]) {
-            $dtDis = $dtServico[$k];
-            $dtDis->setData($datas);
-            if($dtDisDAO->atualizarDataDisponivel($dtDis)) {
-                $inclusoesQtd ++;
-            }
-        }else if(isset($datas)){
-            $dtDis->setData($datas);
-            $dtDis->setidServico($idServico);
-            $dtDis->setDisponivel(true);
-            if($dtDisDAO->inserirDataDisponivel($dtDis)) {
-                $atualizacoesQtd ++;
-            }
-        }
-    }
+    // for ($i = 0; $i < 7; $i++) {
+    //     $fieldName = 'data-' . $i+1 . "-id";
+    //     if (isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) {
+    //         $idDatasDisponiveis[] = (int) $_POST[$fieldName];
+    //     }
+    // }
+    // foreach($_SESSION["datasDisponiveis"] as $k => $datas) {
+    //     $dtDis = new DataDisponivel();
+    //     if($dtServico[$k]->getIdDisponibilidade() == $idDatasDisponiveis[$k]) {
+    //         $dtDis = $dtServico[$k];
+    //         $dtDis->setData($datas);
+    //         if($dtDisDAO->atualizarDataDisponivel($dtDis)) {
+    //             $inclusoesQtd ++;
+    //         }
+    //     }else if(isset($datas)){
+    //         $dtDis->setData($datas);
+    //         $dtDis->setidServico($idServico);
+    //         $dtDis->setDisponivel(true);
+    //         if($dtDisDAO->inserirDataDisponivel($dtDis)) {
+    //             $atualizacoesQtd ++;
+    //         }
+    //     }
+    // }
     $_SESSION['sucesso'] = "Registrado com sucesso.";
     header("Location:controllerServico.php?opcao=buscarPorIdParaAlterar&idServico=$idServico");
 }
