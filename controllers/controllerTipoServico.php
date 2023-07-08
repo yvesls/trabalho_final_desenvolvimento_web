@@ -27,6 +27,8 @@ if($opcao == "incluirTipoServico") {
 }
 
 if($opcao == "buscarTipoServicoParaIncluirServico" || $opcao == "buscarTipoServicoParaAlterarServico") {
+    session_start();
+    
     $tsDAO = new TipoServicoDAO();
 
     $ts = $tsDAO->buscarTodos();

@@ -54,7 +54,10 @@ if ($opcao == "excluirServico") {
     $pagina = (int) $_REQUEST["pagina"];
     $id = $_REQUEST['idServico'];
     $ServicoDAO = new ServicoDAO();
-    header("Location:../../view/editarServicos.php");
+
+    $ServicoDAO->excluirServico($id);
+
+    header("Location: ./controllerServico.php?opcao=buscarServicoPorPaginaPeloMenu&pagina=1");
 }
 
 if ($opcao == "buscarPorIdParaAlterar") {

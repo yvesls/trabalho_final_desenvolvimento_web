@@ -56,10 +56,10 @@ foreach($tipoServicos as $k => $ts) {
         </div>
         <?php
         $datas = $servico->getDatasDisponiveis();
-        for ($i = 1; $i <= 7; $i++) {
-            $label = "Data " . $i;
-            $name = "data-" . $i;
-            $nameIdData = "data-" . $i . "-id";
+        for ($i = 0; $i < 7; $i++) {
+            $label = "Data " . $i + 1;
+            $name = "data-" . $i + 1;
+            $nameIdData = "data-" . $i + 1 . "-id";
             $valueIdData = "";
             $data = "";
             if(isset($datas[$i])){
