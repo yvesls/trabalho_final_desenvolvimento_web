@@ -14,13 +14,13 @@ $opcao = $_REQUEST["opcao"];
 */
 
 if ($opcao == "incluirServico") {
-    $ts = new Servico();
-    $ts->setNome($_POST['nome']);
-    $ts->setDescricao($_POST['descricao']);
-    $ts->setValor($_POST['valor']);
-    $ts->setTipo($_POST['tipo-servico-nome']);
-    $tsDAO = new ServicoDAO();
-    $idGerado = $tsDAO->inserirServico($ts);
+    $s = new Servico();
+    $s->setNome($_POST['nome']);
+    $s->setDescricao($_POST['descricao']);
+    $s->setValor($_POST['valor']);
+    $s->setTipo($_POST['tipo-servico-nome']);
+    $sDAO = new ServicoDAO();
+    $idGerado = $sDAO->inserirServico($s);
 
     session_start();
     if(isset($idGerado)) {
@@ -40,77 +40,55 @@ if ($opcao == "incluirServico") {
     }
 }
 
-if ($opcao == "buscarServicoPorPagina") {
+if ($opcao == "buscarServicoPorPagina" || $opcao == "buscarServicoPorPaginaPeloMenu") {
     $pagina = (int) $_REQUEST["pagina"];
     $sDAO = new ServicoDAO();
     $lista = $sDAO->buscarTodos($pagina);
     $numPaginas = $sDAO->getPagina();
     session_start();
     $_SESSION["servicos"] = $lista;
-    header("Location:../../view/exibirServicos.php?paginas=$numPaginas");
+    header("Location:../view/exibirServicos.php?paginas=$numPaginas");
 }
 
 if ($opcao == "excluirServico") {
     $pagina = (int) $_REQUEST["pagina"];
     $id = $_REQUEST['idServico'];
     $ServicoDAO = new ServicoDAO();
-    
-    if($ServicoDAO->excluirServico($id)) {
-        $_SESSION['sucesso'] = "Registrado com sucesso.";
-    }else {
-        $_SESSION['erro'] = "Ocorreu um erro inesperado. Contacte o administrador do sistema.";
-    }
-    header("Location: controllerServico.php?opcao=buscarServicoPorPagina&pagina=$pagina");
+    header("Location:../../view/editarServicos.php");
 }
-if ($opcao == "buscarPorId") {
-    $id = $_REQUEST['id'];
-    $produtoDAO = new ProdutoDAO();
-    $produto = $produtoDAO->consultarProdutoPorId($id);
+
+if ($opcao == "buscarPorIdParaAlterar") {
+    $id = $_REQUEST['idServico'];
+    $sDAO = new ServicoDAO();
+    $s = $sDAO->buscarPorId($id);
     session_start();
-    $_SESSION["produto"] = $produto;
-    header('Location: controllerFabricante.php?opcao=exibirTodosPorAlterar');
+    $_SESSION["servico"] = $s;
+    header('Location:controllerTipoServico.php?opcao=buscarTipoServicoParaAlterarServico');
 }
 
-if ($opcao == "alterar") {
-    $retorno_verificacao = validate("alterar");
-    if ($retorno_verificacao == null) {
-        $produto = new Produto();
-        $produto->setProdutoId($_POST['produto_id']);
-        $produto->setNome($_POST['nome']);
-        $produto->setDescricao((string) $_POST['descricao']);
-        $produto->setEstoque($_POST['estoque']);
-        $produto->setFabricante($_POST['fabricante']);
-        $produto->setPreco($_POST['preco']);
-        $produto->setReferencia($_POST['referencia']);
-        $produtoDAO = new ProdutoDAO();
-
-        $produtoOld = $produtoDAO->consultarProdutoPorId($id);
-
-        if(isset($_FILES["imagem"]) && $_FILES["imagem"] != NULL){
-            deletarFoto($produtoOld->getReferencia());
-            uploadFotos($referencia);
-        } else {
-            if($produtoOld->getReferencia() != $referencia){
-                renomearFoto($produtoOld->getReferencia(), $referencia);
+if ($opcao == "alterarServico") {
+    $s = new Servico();
+    $id = $_POST["idServico"];
+    $s->setIdServico($id);
+    $s->setNome($_POST['nome']);
+    $s->setDescricao($_POST['descricao']);
+    $s->setValor($_POST['valor']);
+    $s->setTipo($_POST['tipo-servico-nome']);
+    $sDAO = new ServicoDAO();
+    session_start();
+    if($sDAO->atualizarServico($s)) {
+        $datasDisponiveis = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $fieldName = 'data-' . $i;
+            if (isset($_POST[$fieldName]) && !empty($_POST[$fieldName])) {
+                $datasDisponiveis[] = $_POST[$fieldName];
             }
         }
-
-        $produtoDAO->atualizarProduto($produto);
-        header('Location: controllers/../controllerProduto.php?opcao=exibirTodos');
-    } else {
-        session_start();
-        $_SESSION['erro1'] = $retorno_verificacao;
-        header("Location:../views/formAlterarProduto.php?erro=1");
+        $_SESSION["datasDisponiveis"] = $datasDisponiveis;
+        header("Location:controllerDataDisponivel.php?opcao=alterarDatasDisponiveis&idServico=$id");
+    }else {
+        $_SESSION['erro'] = "Ocorreu um erro inesperado. Contacte o administrador do sistema.";
+        header("Location:controllerServico.php?opcao=buscarPorIdParaAlterar&idServico=$id");
     }
 }
 
-if ($opcao == "porPagina") {
-
-    $pagina = (int) $_REQUEST["pagina"];
-    $produtoDAO = new ProdutoDAO();
-    $lista = $produtoDAO->getProdutosPaginacao($pagina);
-    $numPaginas = $produtoDAO->getPagina();
-    session_start();
-    $_SESSION["produtos"] = $lista;
-    header("Location: ../views/exibirProdutosPaginacao.php?paginas=$numPaginas");
-}

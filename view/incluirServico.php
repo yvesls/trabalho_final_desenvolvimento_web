@@ -2,7 +2,15 @@
 require_once '../model/tipoServico.inc.php';
 require_once '../utils/utils.inc.php';
 require_once 'includes/cabecalho.inc.php';
-
+if (isset($_SESSION["erro"])) { 
+    $erro = $_SESSION["erro"];
+    unset($_SESSION["erro"]);
+    exibirMensagem($erro, "bg-danger", 2);
+} else if (isset($_SESSION["sucesso"])) {
+    $sucesso = $_SESSION["sucesso"];
+    unset($_SESSION["sucesso"]);
+    exibirMensagem($sucesso, "bg-success", 2);
+}
 ?>
 <h2 class="text-center">Formulário de Serviços</h2>
 <div class="container">
@@ -57,14 +65,5 @@ require_once 'includes/cabecalho.inc.php';
     </form>
 </div>
 <?php
-if (isset($_SESSION["erro"])) { 
-    $erro = $_SESSION["erro"];
-    unset($_SESSION["erro"]);
-    exibirMensagem($erro, "bg-danger", 2);
-} else if (isset($_SESSION["sucesso"])) {
-    $sucesso = $_SESSION["sucesso"];
-    unset($_SESSION["sucesso"]);
-    exibirMensagem($sucesso, "bg-success", 2);
-}
 require_once './includes/rodape.inc.php';
 ?>

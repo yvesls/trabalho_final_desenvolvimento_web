@@ -79,7 +79,7 @@ $cliente = $_SESSION["clienteLogado"];
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../controllers/controllerServico.php?opcao=buscarServicoPorPagina&pagina=1" aria-expanded="false">
+              <a class="sidebar-link" href="../controllers/controllerServico.php?opcao=buscarServicoPorPaginaPeloMenu&pagina=1" aria-expanded="false">
                 <span>
                   <i class="ti ti-list"></i>
                 </span>

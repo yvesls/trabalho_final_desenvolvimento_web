@@ -59,7 +59,7 @@ class ServicoDAO
         $stmt->bindValue(':nome', $servico->getNome());
         $stmt->bindValue(':valor', $servico->getValor());
         $stmt->bindValue(':descricao', $servico->getDescricao());
-        $stmt->bindValue(':idTipo', $servico->getIdTipo());
+        $stmt->bindValue(':idTipo', $servico->getTipo());
         $stmt->bindValue(':idServico', $servico->getIdServico());
 
         if ($stmt->execute()) {
@@ -71,16 +71,19 @@ class ServicoDAO
 
     public function buscarPorId($idServico)
     {
-        $sql = "SELECT * FROM servicos WHERE id_servico = :idServico";
+        $sql = "SELECT s.id_servico, s.nome, s.valor, s.descricao, ts.nome tipo
+                                        FROM servicos s 
+                                        INNER JOIN tipo ts
+                                        ON s.id_tipo = ts.id_tipo WHERE s.id_servico = :idServico";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(':idServico', $idServico);
         $stmt->execute();
 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $dataDAO = new DataDisponivelDAO();
         if ($resultado) {
-            return $this->criarServico($resultado, null);
+            return $this->criarServico($resultado, $dataDAO);
         } else {
             return null;
         }

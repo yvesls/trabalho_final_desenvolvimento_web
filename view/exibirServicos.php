@@ -51,8 +51,8 @@ if (isset($_SESSION["erro"])) {
                   <td><?= $servico->getValor() ?></td>
                   <td><?= $datas ?></td>
                   <td>
-                    <a href="editar_servico.php?id=<?= $servico->getIdServico() ?>" class="btn btn-primary">Editar</a>
-                    <a href="../controllers//controllerServico.php?opcao=excluirServico&pagina=<?=$paginas?>&idServico=<?=$servico->getIdServico() ?>" class="btn btn-danger ml-3">Excluir</a>
+                    <a href="../controllers/controllerServico.php?opcao=buscarPorIdParaAlterar&pagina=<?=$paginas?>&idServico=<?=$servico->getIdServico() ?>" class="btn btn-primary">Editar</a>
+                    <a href="../controllers/controllerServico.php?opcao=excluirServico&pagina=<?=$paginas?>&idServico=<?=$servico->getIdServico() ?>" class="btn btn-danger ml-3">Excluir</a>
                   </td>
                 </tr>
             <?php
