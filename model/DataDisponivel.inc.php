@@ -11,11 +11,12 @@ class DataDisponivel
     {
     }
 
-    public function setDataDisponivel($id_servico, $data, $disponivel)
+    public function setDataDisponivel($id_servico, $data, $disponivel, $id_disponibilidade)
     {
         $this->id_servico = $id_servico;
         $this->data = $data;
         $this->disponivel = $disponivel;
+        $this->id_disponibilidade = $id_disponibilidade;
     }
 
     public function getIdServico()

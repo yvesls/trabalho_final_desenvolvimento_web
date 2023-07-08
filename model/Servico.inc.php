@@ -6,18 +6,11 @@ class Servico
     private $nome;
     private $valor;
     private $descricao;
-    private $id_tipo;
+    private $tipo;
+    private $datasDisponiveis;
 
     public function __construct()
     {
-    }
-
-    public function setServico($nome, $valor, $descricao, $id_tipo)
-    {
-        $this->nome = $nome;
-        $this->valor = $valor;
-        $this->descricao = $descricao;
-        $this->id_tipo = $id_tipo;
     }
 
     public function getIdServico()
@@ -60,13 +53,23 @@ class Servico
         $this->descricao = $descricao;
     }
 
-    public function getIdTipo()
+    public function getDatasDisponiveis()
     {
-        return $this->id_tipo;
+        return $this->datasDisponiveis;
     }
 
-    public function setIdTipo($id_tipo)
+    public function adicionarDataDisponivel($datasDisponiveis)
     {
-        $this->id_tipo = $id_tipo;
+        $this->datasDisponiveis = $datasDisponiveis;
+    }
+
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
     }
 }

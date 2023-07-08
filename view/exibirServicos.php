@@ -1,5 +1,18 @@
 <?php
+require_once '../model/Servico.inc.php';
+require_once '../model/DataDisponivel.inc.php';
+require_once '../utils/utils.inc.php';
 require_once './includes/cabecalho.inc.php';
+$paginas = $_REQUEST["paginas"];
+if (isset($_SESSION["erro"])) { 
+    $erro = $_SESSION["erro"];
+    unset($_SESSION["erro"]);
+    exibirMensagem($erro, "bg-danger", 2);
+} else if (isset($_SESSION["sucesso"])) {
+    $sucesso = $_SESSION["sucesso"];
+    unset($_SESSION["sucesso"]);
+    exibirMensagem($sucesso, "bg-success", 2);
+}
 ?>
 <div class="container">
     <h2>Lista de Serviços Cadastrados</h2>
@@ -10,53 +23,56 @@ require_once './includes/cabecalho.inc.php';
                 <th>Nome</th>
                 <th>Tipo</th>
                 <th>Preço</th>
-                <th>Data Disponível</th>
+                <th>Datas Disponíveis</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody class="text-center">
             <?php
-            // Aqui você precisa obter os dados dos serviços do banco de dados
-            // e percorrer os resultados para exibir na tabela
-            // Substitua a parte comentada com o código correspondente para buscar os serviços no banco de dados
-
-            // Exemplo estático de dados para teste
-            $servicos = [
-                [
-                    'id' => 1,
-                    'nome' => 'Serviço 1',
-                    'tipo' => 'Tipo 1',
-                    'preco' => 100.00,
-                    'data' => '07/06/2023, 08/06/2023, 09/06/2023'
-                ],
-                [
-                    'id' => 2,
-                    'nome' => 'Serviço 2',
-                    'tipo' => 'Tipo 2',
-                    'preco' => 150.00,
-                    'data' => '02/06/2023, 03/06/2023'
-                ],
-            ];
-
+            $servicos = $_SESSION['servicos'];
+            $datas = "";
             foreach ($servicos as $servico) {
+                foreach ($servico->getDatasDisponiveis() as $dt) {
+                    if($servico->getIdServico() == $dt->getIdServico())
+                        $datas .= $dt->getData().", ";
+                }
+            }
+            foreach ($servicos as $servico) {
+                $datas = "";
+                foreach ($servico->getDatasDisponiveis() as $dt) {
+                    if($servico->getIdServico() == $dt->getIdServico())
+                        $datas .= formatarData(strtotime($dt->getData())).", ";
+                }
                 ?>
                 <tr>
-                  <td><?= $servico['id'] ?></td>
-                  <td><?= $servico['nome'] ?></td>
-                  <td><?= $servico['tipo'] ?></td>
-                  <td><?= $servico['preco'] ?></td>
-                  <td><?= $servico['data'] ?></td>
+                  <td><?= $servico->getIdServico() ?></td>
+                  <td><?= $servico->getNome() ?></td>
+                  <td><?= $servico->getTipo() ?></td>
+                  <td><?= $servico->getValor() ?></td>
+                  <td><?= $datas ?></td>
                   <td>
-                    <a href="editar_servico.php?id=<?= $servico['id'] ?>" class="btn btn-primary">Editar</a>
-                    <a href="excluir_servico.php?id=<?= $servico['id'] ?>" class="btn btn-danger ml-3">Excluir</a>
+                    <a href="../controllers/controllerServico.php?opcao=buscarPorIdParaAlterar&pagina=<?=$paginas?>&idServico=<?=$servico->getIdServico() ?>" class="btn btn-primary">Editar</a>
+                    <a href="../controllers/controllerServico.php?opcao=excluirServico&pagina=<?=$paginas?>&idServico=<?=$servico->getIdServico() ?>" class="btn btn-danger ml-3">Excluir</a>
                   </td>
                 </tr>
             <?php
             }
             ?>
         </tbody>
+       
     </table>
 </div>
+    <div class="w-25 m-auto">
+    <?php
+        for ($i = 1; $i <= $paginas; $i++) {
+        ?>
+            <a class="p-2 text-center mr-1 w-25" href="../controllers/controllerServico.php?opcao=buscarServicoPorPagina&pagina=<?= $i ?>">
+                <div class="bg-primary w-25 rounded text-white"> <?= $i ?></div>
+            </a>
+        <?php
+        }
+        ?>
+    </div>
 <?php
 require_once './includes/rodape.inc.php';
 ?>

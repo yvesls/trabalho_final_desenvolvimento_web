@@ -26,14 +26,17 @@ if($opcao == "incluirTipoServico") {
     header("Location:../view/incluirTipoServico.php");
 }
 
-if($opcao == "buscarTipoServicoParaIncluirServico") {
+if($opcao == "buscarTipoServicoParaIncluirServico" || $opcao == "buscarTipoServicoParaAlterarServico") {
     $tsDAO = new TipoServicoDAO();
 
     $ts = $tsDAO->buscarTodos();
 
-    session_start();
     if(!empty($ts)) {
         $_SESSION["tipoServico"] = $ts;
     }
-    header("Location:../view/incluirServico.php");
+    if($opcao == "buscarTipoServicoParaAlterarServico"){
+        header("Location:../view/editarServico.php");
+    }else {
+        header("Location:../view/incluirServico.php");
+    }
 }
