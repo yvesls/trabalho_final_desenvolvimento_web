@@ -63,7 +63,7 @@ $cliente = $_SESSION["clienteLogado"];
               <span class="hide-menu">Manutenção de Serviços</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./cadastrarServico.php" aria-expanded="false">
+              <a class="sidebar-link" href="../controllers/controllerTipoServico.php?opcao=buscarTipoServicoParaIncluirServico" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -71,7 +71,15 @@ $cliente = $_SESSION["clienteLogado"];
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./listarServicos.php" aria-expanded="false">
+              <a class="sidebar-link" href="./incluirTipoServico.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user-plus"></i>
+                </span>
+                <span class="hide-menu">Cadastrar Tipo de Serviço</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./exibirServicos.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-list"></i>
                 </span>

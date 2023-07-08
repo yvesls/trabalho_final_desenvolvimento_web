@@ -103,8 +103,7 @@ CREATE TABLE `servicos` (
 
 CREATE TABLE `tipo` (
   `id_tipo` int(11) NOT NULL,
-  `nome` varchar(30) NOT NULL,
-  `valor` float NOT NULL
+  `nome` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -136,6 +135,8 @@ ALTER TABLE `datasdisponiveis`
 --
 ALTER TABLE `tipo`
   ADD PRIMARY KEY (`id_tipo`);
+ALTER TABLE `tipo`
+  ADD AUTO_INCREMENT (`id_tipo`);
 
 --
 -- Indexes for table `vendas`
@@ -146,7 +147,8 @@ ALTER TABLE `vendas`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
+  ALTER TABLE `servicos`
+  ADD AUTO_INCREMENT (`id_servico`);
 --
 -- AUTO_INCREMENT for table `vendas`
 --
