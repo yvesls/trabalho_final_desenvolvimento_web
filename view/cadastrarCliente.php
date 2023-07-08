@@ -23,7 +23,7 @@ require_once './includes/cabecalho.inc.php';
                         </div>
                         <script>
                             setTimeout(function() {
-                                window.location.href = '../view/login.php';
+                                window.location.href = '../controllers/controllerCliente.php?opcao=3';
                             }, 2000);
                         </script>
                 <?php
